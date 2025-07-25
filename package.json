@@ -16,8 +16,7 @@
     "LICENSE"
   ],
   "bin": {
-    "ingress-headers-read": "dist/read_csp.js",
-    "ingress-headers-write": "dist/write_csp.js"
+    "ingress-headers": "dist/ingress-headers.js"
   },
   "scripts": {
     "build": "tsc",

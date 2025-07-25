@@ -3,7 +3,7 @@
 import fs from "fs";
 import path from "path";
 
-/* Note: run with: npx ts-node src/read_csp.ts example/ingress.yaml */
+/* Note: run with: npx ts-node src/read_headers.ts example/ingress.yaml */
 
 export interface CSPDirectives {
   [directiveName: string]: string[];
@@ -54,7 +54,7 @@ if (require.main === module) {
   const yamlFilePath = process.argv[2];
   if (!yamlFilePath) {
     console.error("Error: Please provide a YAML file path as an argument.");
-    console.error("Usage: npx ts-node src/read_csp.ts example/ingress.yaml");
+    console.error("Usage: npx ts-node src/read_headers.ts example/ingress.yaml");
     process.exit(1);
   }
 

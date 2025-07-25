@@ -3,8 +3,8 @@
  * from Kubernetes ingress YAML files.
  */
 
-export { readCSP, CSPDirectives } from './read_csp';
-export { writeCSP } from './write_csp';
+export { readCSP, CSPDirectives } from './read_headers';
+export { writeCSP } from './write_headers';
 
 // Re-export types
 export * from './types';

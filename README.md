@@ -18,26 +18,26 @@ This package provides tools to:
 
 ## Tools
 
-### `read_csp.ts`
+### `read_headers.ts`
 
 Extracts Content Security Policy from ingress YAML files and outputs structured JSON.
 
 ```bash
-npx ts-node src/read_csp.ts example/ingress.yaml
+npx ts-node src/read_headers.ts example/ingress.yaml
 ```
 
 **Output**: JSON object with CSP directives organized by type (e.g., `default-src`, `script-src`, `img-src`)
 
-### `write_csp.ts`
+### `write_headers.ts`
 
 Updates Content Security Policy in ingress YAML files using JSON input from stdin.
 
 ```bash
 # Direct input
-npx ts-node src/write_csp.ts target-ingress.yaml < csp.json
+npx ts-node src/write_headers.ts target-ingress.yaml < headers.json
 
-# Piped from read_csp.ts
-npx ts-node src/read_csp.ts source-ingress.yaml | npx ts-node src/write_csp.ts target-ingress.yaml
+# Piped from read_headers.ts
+npx ts-node src/read_headers.ts source-ingress.yaml | npx ts-node src/write_headers.ts target-ingress.yaml
 ```
 
 ## Installation
@@ -68,24 +68,52 @@ await writeCSP('path/to/target.yaml', cspData);
 
 ### Command Line Tools
 
-After installation, you can use the CLI tools:
+After installation, you can use the unified CLI tool:
 
 ```bash
 # Extract CSP from YAML (globally available after npm install -g)
-ingress-headers-read example/ingress.yaml
+ingress-headers read example/ingress.yaml
 
 # Update CSP in YAML file
-ingress-headers-read source.yaml | ingress-headers-write target.yaml
+ingress-headers write target.yaml < headers.json
+
+# Pipe from read to write
+ingress-headers read source.yaml | ingress-headers write target.yaml
+```
+
+## CLI Usage
+
+The `ingress-headers` command supports two operations:
+
+### Read Command
+Extracts CSP from a YAML file and outputs it as JSON:
+```bash
+ingress-headers read <yaml-file>
+```
+
+### Write Command  
+Updates CSP in a YAML file using JSON input from stdin:
+```bash
+ingress-headers write <yaml-file> < headers.json
+```
+
+### Combined Operations
+You can pipe the output from read directly to write:
+```bash
+ingress-headers read source.yaml | ingress-headers write target.yaml
 ```
 
 ### Development Mode
 
 ```bash
-# Extract CSP from YAML
-npx ts-node src/read_csp.ts example/ingress.yaml
+# Unified command (recommended)
+npx ts-node src/ingress-headers.ts read example/ingress.yaml
+npx ts-node src/ingress-headers.ts write target.yaml < headers.json
+npx ts-node src/ingress-headers.ts read source.yaml | npx ts-node src/ingress-headers.ts write target.yaml
 
-# Update CSP in YAML file  
-npx ts-node src/read_csp.ts source.yaml | npx ts-node src/write_csp.ts target.yaml
+# Individual commands (for development)
+npx ts-node src/read_headers.ts example/ingress.yaml
+npx ts-node src/read_headers.ts source.yaml | npx ts-node src/write_headers.ts target.yaml
 ```
 
 ## Requirements
@@ -111,12 +139,12 @@ npm run prepare  # Clean and build (runs automatically before publishing)
 1. **Extract** CSP from source environment:
 
    ```bash
-   npx ts-node src/read_csp.ts example/ingress.yaml > current-csp.json
+   ingress-headers read example/ingress.yaml > current-headers.json
    ```
 
 2. **Modify** the JSON file as needed
 
 3. **Apply** to target environment:
    ```bash
-   npx ts-node src/write_csp.ts target/ingress.yaml < current-csp.json
+   ingress-headers write target/ingress.yaml < current-headers.json
    ```

@@ -2,10 +2,10 @@
 
 import fs from "fs";
 import path from "path";
-import { CSPDirectives } from "./read_csp";
+import { CSPDirectives } from "./read_headers";
 
-/* Note: run with: npx ts-node src/write_csp.ts values/te-tst/portal-kpnthings.yaml < csp.json */
-/* Or pipe from read_csp.ts: npx ts-node src/read_csp.ts values/te-tst/portal-kpnthings.yaml | npx ts-node src/write_csp.ts values/te-dev/portal-kpnthings.yaml */
+/* Note: run with: npx ts-node src/write_headers.ts values/te-tst/portal-kpnthings.yaml < headers.json */
+/* Or pipe from read_headers.ts: npx ts-node src/read_headers.ts values/te-tst/portal-kpnthings.yaml | npx ts-node src/write_headers.ts values/te-dev/portal-kpnthings.yaml */
 
 /**
  * Updates a YAML file with new Content Security Policy directives
@@ -70,8 +70,8 @@ if (require.main === module) {
 
   if (!yamlFilePath) {
     console.error("Error: Please provide a YAML file path as an argument.");
-    console.error("Usage: npx ts-node src/write_csp.ts values/te-tst/portal-kpnthings.yaml < csp.json");
-    console.error("Or pipe: npx ts-node src/read_csp.ts source.yaml | npx ts-node src/write_csp.ts target.yaml");
+    console.error("Usage: npx ts-node src/write_headers.ts values/te-tst/portal-kpnthings.yaml < headers.json");
+    console.error("Or pipe: npx ts-node src/read_headers.ts source.yaml | npx ts-node src/write_headers.ts target.yaml");
     process.exit(1);
   }
 
@@ -82,7 +82,7 @@ if (require.main === module) {
       
       if (!jsonContent) {
         console.error("Error: No JSON data provided via stdin.");
-        console.error("Usage: npx ts-node src/write_csp.ts values/te-tst/portal-kpnthings.yaml < csp.json");
+        console.error("Usage: npx ts-node src/write_headers.ts values/te-tst/portal-kpnthings.yaml < headers.json");
         process.exit(1);
       }
       
