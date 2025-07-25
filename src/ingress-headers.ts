@@ -92,11 +92,8 @@ const main = async () => {
   }
 };
 
-// CLI functionality when run directly
-// CLI usage when run directly
-if (import.meta.url === `file://${process.argv[1]}`) {
-  main().catch((error) => {
-    console.error(`Unexpected error: ${error instanceof Error ? error.message : String(error)}`);
-    process.exit(1);
-  });
-}
+// Run the CLI when this file is executed directly
+main().catch((error) => {
+  console.error(`Unexpected error: ${error instanceof Error ? error.message : String(error)}`);
+  process.exit(1);
+});
