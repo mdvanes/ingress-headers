@@ -1,0 +1,30 @@
+my_ingress:
+  nameOverride: "some-name"
+  hosts:
+    - some-name.example.com
+  paths:
+    - serviceName: "some-name1"
+      servicePort: 8443
+      path: /
+    - serviceName: "some-name2"
+      servicePort: 80
+      path: /gateway
+  tlsEnabled: true
+  tlsSecretName: "tls-some-name-example-com"
+  annotations:
+    - nginx.ingress.kubernetes.io/force-ssl-redirect: "true"    
+  config: |-
+    add_header Content-Security-Policy "frame-ancestors 'self'; default-src 'self' 'unsafe-inline' *.company.com *.service.com; img-src 'self' 'unsafe-inline' *.privacy-service.org *.trust-service.com data: https://*.service.com https://*.feedback-service.com https://ad.analytics-provider.net/ddm/activity/ https://adservice.search-engine.com https://metrics.company.com; script-src 'self' 'unsafe-eval' 'unsafe-inline' *.privacy-service.org *.trust-service.com https://*.analytics-service.net/ https://*.company.com https://*.feedback-service.com https://assets.tag-manager.com/ https://cdn.personalization-service.net/company.js https://edge.analytics-cloud.net/ https://company.personalization-service.net/ https://www.search-engine.com/recaptcha/ https://www.static-content.com/recaptcha/; style-src 'self' 'unsafe-inline' https://*.company.com https://*.feedback-service.com; frame-src 'self' *.trust-service.com https://*.feedback-service.com https://company.analytics-service.net/ https://www.search-engine.com/recaptcha/ https://www.video-platform.com/; connect-src 'self' *.privacy-service.org *.trust-service.com https://*.analytics-service.net/ https://*.service.com https://*.feedback-service.com https://edge.analytics-cloud.net/ https://company.personalization-service.net/ https://metrics.company.com/; font-src 'self' *.feedback-service.com data: https://*.company.com; report-uri https://some.example.com/gateway/api-gateway/api/gateway/csp-reporting; report-to 'csp-endpoint'";
+    add_header Report-To "{ \"group\": \"csp-endpoint\", \"max-age\": 10886400, \"endpoints\": [{ \"url\": \"https://example.com/csp-reporting\"}] }";
+    add_header Feature-Policy "camera 'none'; microphone 'none'; geolocation 'none'; encrypted-media 'none'; payment 'none'; speaker 'none'; usb 'none';";
+    add_header Referrer-Policy "no-referrer";
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains";
+    add_header X-Content-Type-Options "nosniff";
+    add_header X-DNS-Prefetch-Control "off";
+    add_header X-Download-Options "noopen";
+    add_header X-Frame-Options "deny";
+    add_header X-Permitted-Cross-Domain-Policies "none";
+    add_header X-XSS-Protection "1; mode=block";
+    add_header Access-Control-Allow-Headers "Authorization, Content-Type, Accept";
+    add_header Access-Control-Allow-Methods "GET, POST, PUT, PATCH, DELETE, OPTIONS";
+  whitelist_select: "generic"
