@@ -1,4 +1,4 @@
-# CSP Helper
+# Ingress Headers
 
 A TypeScript utility for extracting and managing Content Security Policy (CSP) headers from Kubernetes ingress YAML files.
 
@@ -43,14 +43,68 @@ npx ts-node src/read_csp.ts source-ingress.yaml | npx ts-node src/write_csp.ts t
 ## Installation
 
 ```bash
+npm install ingress-headers
+```
+
+For development:
+```bash
 npm install
+npm run build
+```
+
+## Usage
+
+### As a Library
+
+```typescript
+import { readCSP, writeCSP, CSPDirectives } from 'ingress-headers';
+
+// Read CSP from YAML file
+const cspData: CSPDirectives = readCSP('path/to/ingress.yaml');
+
+// Write CSP to YAML file
+await writeCSP('path/to/target.yaml', cspData);
+```
+
+### Command Line Tools
+
+After installation, you can use the CLI tools:
+
+```bash
+# Extract CSP from YAML (globally available after npm install -g)
+ingress-headers-read example/ingress.yaml
+
+# Update CSP in YAML file
+ingress-headers-read source.yaml | ingress-headers-write target.yaml
+```
+
+### Development Mode
+
+```bash
+# Extract CSP from YAML
+npx ts-node src/read_csp.ts example/ingress.yaml
+
+# Update CSP in YAML file  
+npx ts-node src/read_csp.ts source.yaml | npx ts-node src/write_csp.ts target.yaml
 ```
 
 ## Requirements
 
-- Node.js
-- TypeScript
-- ts-node
+- Node.js >= 14
+- TypeScript (for development)
+
+## Build Process
+
+The package is built using TypeScript and generates:
+- **JavaScript files** (`.js`) - Compiled TypeScript code
+- **Declaration files** (`.d.ts`) - TypeScript type definitions  
+- **Source maps** (`.d.ts.map`) - For debugging support
+
+```bash
+npm run build    # Compile TypeScript to JavaScript
+npm run clean    # Remove dist/ directory
+npm run prepare  # Clean and build (runs automatically before publishing)
+```
 
 ## Example Workflow
 

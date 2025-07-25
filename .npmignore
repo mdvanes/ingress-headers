@@ -1,0 +1,15 @@
+# Source files
+src/
+tsconfig.json
+.gitignore
+
+# Development
+node_modules/
+*.log
+.DS_Store
+
+# Example files
+example/
+
+# Git
+.git/

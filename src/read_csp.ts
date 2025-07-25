@@ -1,32 +1,35 @@
+#!/usr/bin/env node
+
 import fs from "fs";
 import path from "path";
 
 /* Note: run with: npx ts-node src/read_csp.ts example/ingress.yaml */
 
-// Get the YAML file path from command line arguments
-const yamlFilePath = process.argv[2];
-if (!yamlFilePath) {
-  console.error("Error: Please provide a YAML file path as an argument.");
-  console.error("Usage: npx ts-node src/read_csp.ts example/ingress.yaml");
-  process.exit(1);
+export interface CSPDirectives {
+  [directiveName: string]: string[];
 }
 
-const yamlPath = path.join(__dirname, "..", yamlFilePath);
-if (!fs.existsSync(yamlPath)) {
-  console.error(`Error: File not found: ${yamlPath}`);
-  process.exit(1);
-}
+/**
+ * Reads a YAML file and extracts the Content Security Policy, returning it as a structured JSON object
+ * @param yamlFilePath - Path to the YAML file containing the CSP
+ * @returns CSP directives organized by type
+ */
+export function readCSP(yamlFilePath: string): CSPDirectives {
+  const yamlPath = path.resolve(yamlFilePath);
+  
+  if (!fs.existsSync(yamlPath)) {
+    throw new Error(`File not found: ${yamlPath}`);
+  }
 
-const yamlContent = fs.readFileSync(yamlPath, "utf8");
+  const yamlContent = fs.readFileSync(yamlPath, "utf8");
 
-const run = () => {
   // Extract the Content-Security-Policy line
   const cspMatch = yamlContent.match(
     /add_header Content-Security-Policy "(.*?)";/s
   );
+  
   if (!cspMatch) {
-    console.error("Content-Security-Policy header not found.");
-    process.exit(1);
+    throw new Error("Content-Security-Policy header not found.");
   }
 
   const csp = cspMatch[1];
@@ -44,7 +47,22 @@ const run = () => {
   }, {});
 
   return cspJson;
-};
+}
 
-const cspJson = run();
-console.log(JSON.stringify(cspJson, null, 2));
+// CLI functionality when run directly
+if (require.main === module) {
+  const yamlFilePath = process.argv[2];
+  if (!yamlFilePath) {
+    console.error("Error: Please provide a YAML file path as an argument.");
+    console.error("Usage: npx ts-node src/read_csp.ts example/ingress.yaml");
+    process.exit(1);
+  }
+
+  try {
+    const cspJson = readCSP(yamlFilePath);
+    console.log(JSON.stringify(cspJson, null, 2));
+  } catch (error) {
+    console.error(`Error: ${error instanceof Error ? error.message : String(error)}`);
+    process.exit(1);
+  }
+}

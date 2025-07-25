@@ -1,14 +1,37 @@
 {
-  "name": "csp-helper",
+  "name": "ingress-headers",
   "version": "1.0.0",
   "author": "M.D. van Es",
   "license": "ISC",
-  "description": "",
+  "description": "A TypeScript utility for extracting and managing Content Security Policy (CSP) headers from Kubernetes ingress YAML files",
   "repository": {
     "type": "git",
     "url": "https://github.com/mdvanes/csp-helper"
   },
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "LICENSE"
+  ],
+  "bin": {
+    "ingress-headers-read": "dist/read_csp.js",
+    "ingress-headers-write": "dist/write_csp.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "prepare": "npm run clean && npm run build"
+  },
+  "keywords": [
+    "csp",
+    "content-security-policy",
+    "kubernetes",
+    "ingress",
+    "yaml",
+    "security"
+  ],
   "devDependencies": {
     "ts-node": "^10.9.2",
     "acorn": "^8.15.0",
