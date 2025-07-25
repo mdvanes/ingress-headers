@@ -1,13 +1,13 @@
 {
-  "name": "ingress-headers",
-  "version": "1.0.1",
+  "name": "@mdworld/ingress-headers",
+  "version": "1.0.2",
   "type": "module",
   "author": "M.D. van Es",
   "license": "ISC",
   "description": "A TypeScript utility for extracting and managing Content Security Policy (CSP) headers from Kubernetes ingress YAML files",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mdvanes/csp-helper"
+    "url": "https://github.com/mdvanes/ingress-headers"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
