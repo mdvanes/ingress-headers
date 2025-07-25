@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import { readCSP } from './read_headers';
-import { writeCSP } from './write_headers';
+import { readCSP } from './read_headers.js';
+import { writeCSP } from './write_headers.js';
 
 /* Note: run with: npx ts-node src/ingress-headers.ts read example/ingress.yaml */
 /* Or: npx ts-node src/ingress-headers.ts write target.yaml < headers.json */
@@ -93,7 +93,8 @@ const main = async () => {
 };
 
 // CLI functionality when run directly
-if (require.main === module) {
+// CLI usage when run directly
+if (import.meta.url === `file://${process.argv[1]}`) {
   main().catch((error) => {
     console.error(`Unexpected error: ${error instanceof Error ? error.message : String(error)}`);
     process.exit(1);

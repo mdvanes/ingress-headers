@@ -50,7 +50,8 @@ export function readCSP(yamlFilePath: string): CSPDirectives {
 }
 
 // CLI functionality when run directly
-if (require.main === module) {
+// CLI usage when run directly
+if (import.meta.url === `file://${process.argv[1]}`) {
   const yamlFilePath = process.argv[2];
   if (!yamlFilePath) {
     console.error("Error: Please provide a YAML file path as an argument.");

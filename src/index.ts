@@ -1,10 +1,10 @@
 /**
- * Ingress Headers - A TypeScript utility for managing Content Security Policy headers
- * from Kubernetes ingress YAML files.
+ * Main entry point for the ingress-headers package
+ * Exports all public APIs for programmatic usage
  */
 
-export { readCSP, CSPDirectives } from './read_headers';
-export { writeCSP } from './write_headers';
+export { readCSP, CSPDirectives } from './read_headers.js';
+export { writeCSP } from './write_headers.js';
 
-// Re-export types
-export * from './types';
+// Export types
+export * from './types.js';

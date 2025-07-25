@@ -2,7 +2,7 @@
 
 import fs from "fs";
 import path from "path";
-import { CSPDirectives } from "./read_headers";
+import { CSPDirectives } from "./read_headers.js";
 
 /* Note: run with: npx ts-node src/write_headers.ts values/te-tst/portal-kpnthings.yaml < headers.json */
 /* Or pipe from read_headers.ts: npx ts-node src/read_headers.ts values/te-tst/portal-kpnthings.yaml | npx ts-node src/write_headers.ts values/te-dev/portal-kpnthings.yaml */
@@ -26,7 +26,7 @@ export async function writeCSP(yamlFilePath: string, cspData: CSPDirectives): Pr
   // Convert JSON back to CSP string format
   const cspDirectives = Object.entries(cspData)
     .map(([directive, values]) => {
-      return `${directive} ${values.join(" ")}`;
+      return `${directive} ${Array.isArray(values) ? values.join(" ") : values}`;
     })
     .join("; ");
 
@@ -65,7 +65,8 @@ const readStdin = (): Promise<string> => {
 };
 
 // CLI functionality when run directly
-if (require.main === module) {
+// CLI usage when run directly
+if (import.meta.url === `file://${process.argv[1]}`) {
   const yamlFilePath = process.argv[2];
 
   if (!yamlFilePath) {
