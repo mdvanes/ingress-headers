@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [22.x]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run type checking
+        run: npm run build
+
+      - name: Run tests
+        run: npm run test:run
+
+      - name: Test CLI functionality
+        run: |
+          npm run build
+          # Test that the CLI can read CSP from example file
+          node dist/ingress-headers.js read example/ingress.yaml > test-output.json
+          # Verify the output contains expected CSP data
+          grep -q "default-src" test-output.json
+          # Test that individual commands work
+          node dist/read_headers.js example/ingress.yaml > test-read.json
+          grep -q "script-src" test-read.json
+          # Clean up
+          rm -f test-output.json test-read.json
+
+      - name: Test package integrity
+        run: |
+          npm pack --dry-run
