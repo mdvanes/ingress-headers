@@ -6,8 +6,10 @@ metadata:
     description: {{ default (printf "%s-ingress" .Chart.Name) .Values.ingress.name | trunc 63 | trimSuffix "-" }}
     chart: {{ default (printf "%s-ingress" .Chart.Name) .Values.ingress.chartName | trunc 63 | trimSuffix "-" }}
   annotations:
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-      add_header Referrer-Policy "no-referrer";
+    nginx.ingress.kubernetes.io/configuration-snippet: |-
+      add_header Referrer-Policy {{ default "none" .Values.ingress.referrerPolicy | quote }};
+      add_header my-test-header {{ .Values.ingress.myTestHeader | join " " | quote }};
+      add_header Content-Security-Policy {{ include "ingress-headers.csp" .Values.ingress.csp | quote }};
 spec:
   rules:
     - host: app.example.com

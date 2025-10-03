@@ -1,2 +1,15 @@
 ingress:
   name: "vitiate"
+  referrerPolicy: no-referrer
+  myTestHeader:
+    - foo1
+    - bar2
+    - baz3
+  csp:
+    frameAncestors: "'self'"
+    defaultSrc: 
+      - "'self'"
+      - "*.company.com"
+      - "*.service.com"
+      - "'unsafe-inline'"
+    

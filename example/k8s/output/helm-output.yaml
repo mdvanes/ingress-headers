@@ -8,8 +8,10 @@ metadata:
     description: vitiate
     chart: ingress-headers-ingress
   annotations:
-    nginx.ingress.kubernetes.io/configuration-snippet: |
+    nginx.ingress.kubernetes.io/configuration-snippet: |-
       add_header Referrer-Policy "no-referrer";
+      add_header my-test-header "foo1 bar2 baz3";
+      add_header Content-Security-Policy "defaultSrc 'self' *.company.com *.service.com 'unsafe-inline'; frameAncestors 'self'";
 spec:
   rules:
     - host: app.example.com
