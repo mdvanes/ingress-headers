@@ -19,14 +19,14 @@ ingress:
     X-Frame-Options: "deny"
     Referrer-Policy: no-referrer
     Content-Security-Policy:
-      frameAncestors:
+      frame-ancestors:
         - "'self'"
-      defaultSrc:
+      default-src:
         - "'self'"
         - "'unsafe-inline'"
         - "*.company.com"
         - "*.service.com"
-      imgSrc:
+      img-src:
         - "'self'"
         - "'unsafe-inline'"
         - "*.privacy-service.org"
@@ -37,7 +37,7 @@ ingress:
         - "https://ad.analytics-provider.net/ddm/activity/"
         - "https://adservice.search-engine.com"
         - "https://metrics.company.com"
-      scriptSrc:
+      script-src:
         - "'self'"
         - "'unsafe-eval'"
         - "'unsafe-inline'"
@@ -52,19 +52,19 @@ ingress:
         - "https://company.personalization-service.net/"
         - "https://www.search-engine.com/recaptcha/"
         - "https://www.static-content.com/recaptcha/"
-      styleSrc:
+      style-src:
         - "'self'"
         - "'unsafe-inline'"
         - "https://*.company.com"
         - "https://*.feedback-service.com"
-      frameSrc:
+      frame-src:
         - "'self'"
         - "*.trust-service.com"
         - "https://*.feedback-service.com"
         - "https://company.analytics-service.net/"
         - "https://www.search-engine.com/recaptcha/"
         - "https://www.video-platform.com/"
-      connectSrc:
+      connect-src:
         - "'self'"
         - "*.privacy-service.org"
         - "*.trust-service.com"
@@ -74,13 +74,13 @@ ingress:
         - "https://edge.analytics-cloud.net/"
         - "https://company.personalization-service.net/"
         - "https://metrics.company.com/"
-      fontSrc:
+      font-src:
         - "'self'"
         - "*.feedback-service.com"
         - "data:"
         - "https://*.company.com"
-      reportUri: "https://some.example.com/gateway/api-gateway/api/gateway/csp-reporting"
-      reportTo: "'csp-endpoint'"
+      report-uri: "https://some.example.com/gateway/api-gateway/api/gateway/csp-reporting"
+      report-to: "'csp-endpoint'"
     Report-To: "{ \"group\": \"csp-endpoint\", \"max-age\": 10886400, \"endpoints\": [{ \"url\": \"https://example.com/csp-reporting\"}] }"
     Feature-Policy:
       camera: "'none'"
