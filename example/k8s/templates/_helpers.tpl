@@ -1,16 +1,16 @@
 {{/*
-Build a CSP string from either:
+Build a string from either:
 1) A raw string value
 2) A map of directive -> slice/string
 */}}
-{{- define "ingress-headers.csp" -}}
-{{- $csp := . -}}
-{{- if kindIs "string" $csp }}
-{{- $csp | trim -}}
-{{- else if kindIs "map" $csp }}
+{{- define "nested-headers.csp" -}}
+{{- $nested := . -}}
+{{- if kindIs "string" $nested }}
+{{- $nested | trim -}}
+{{- else if kindIs "map" $nested }}
   {{- $parts := list }}
-  {{- range $k := keys $csp | sortAlpha }}
-    {{- $v := index $csp $k }}
+  {{- range $k := keys $nested | sortAlpha }}
+    {{- $v := index $nested $k }}
     {{- if kindIs "slice" $v }}
       {{- $parts = append $parts (printf "%s %s" $k (join " " $v)) }}
     {{- else }}
