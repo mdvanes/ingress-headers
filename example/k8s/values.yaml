@@ -90,4 +90,9 @@ ingress:
       payment: "'none'"
       speaker: "'none'"
       usb: "'none'"
+    # Gives unexpected output:
+    # Strict-Transport-Security:
+    #   max-age: 31536000
+    #   includeSubDomains:
+    Strict-Transport-Security: "max-age=31536000; includeSubDomains"
     
