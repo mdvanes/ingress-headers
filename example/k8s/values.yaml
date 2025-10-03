@@ -1,10 +1,11 @@
 ingress:
   name: "vitiate"
-  referrerPolicy: no-referrer
-  myTestHeader:
-    - foo1
-    - bar2
-    - baz3
+  headers:
+    Referrer-Policy: no-referrer
+    my-test-header: 
+      - foo1
+      - bar2
+      - baz3
   csp:
     frameAncestors:
       - "'self'"

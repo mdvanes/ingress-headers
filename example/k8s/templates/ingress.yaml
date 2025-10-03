@@ -7,9 +7,21 @@ metadata:
     chart: {{ default (printf "%s-ingress" .Chart.Name) .Values.ingress.chartName | trunc 63 | trimSuffix "-" }}
   annotations:
     nginx.ingress.kubernetes.io/configuration-snippet: |-
+      add_header X-Content-Type-Options "nosniff";
+      add_header X-DNS-Prefetch-Control "off";
+      add_header X-Download-Options "noopen";
+      add_header X-Frame-Options "deny";
+      add_header X-Permitted-Cross-Domain-Policies "none";
       add_header Referrer-Policy {{ include "nested-headers.csp" (.Values.ingress.referrerPolicy | default "none") | quote }};
       add_header my-test-header {{ .Values.ingress.myTestHeader | join " " | quote }};
       add_header Content-Security-Policy {{ include "nested-headers.csp" .Values.ingress.csp | quote }};
+      {{- range $k, $v := .Values.ingress.headers }}
+      {{- if kindIs "slice" $v }}
+      add_header {{ $k }} {{ join " " $v | quote }};
+      {{- else }}
+      add_header {{ $k }} {{ $v | quote }};
+      {{- end }}
+      {{- end }}
 spec:
   rules:
     - host: app.example.com
