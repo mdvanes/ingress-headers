@@ -4,10 +4,10 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/configuration-snippet: |-
       add_header X-Permitted-Cross-Domain-Policies "none";
-      add_header Example-String {{ include "nested-headers.csp" (.Values.ingress.exampleString | default "none") | quote }};
+      add_header Example-String {{ include "nested-headers" (.Values.ingress.exampleString | default "none") | quote }};
       add_header Example-List {{ .Values.ingress.exampleList | join " " | quote }};
       {{- range $k, $v := .Values.ingress.headers }}
-      add_header {{ $k }} {{ include "nested-headers.csp" $v | quote }};
+      add_header {{ $k }} {{ include "nested-headers" $v | quote }};
       {{- end }}
     {{- range .Values.ingress.annotations }}
     {{ toYaml . }}

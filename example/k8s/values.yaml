@@ -81,6 +81,7 @@ ingress:
         - "https://*.company.com"
       reportUri: "https://some.example.com/gateway/api-gateway/api/gateway/csp-reporting"
       reportTo: "'csp-endpoint'"
+    Report-To: "{ \"group\": \"csp-endpoint\", \"max-age\": 10886400, \"endpoints\": [{ \"url\": \"https://example.com/csp-reporting\"}] }"
     Feature-Policy:
       camera: "'none'"
       microphone: "'none'"
