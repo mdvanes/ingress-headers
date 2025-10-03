@@ -12,15 +12,10 @@ metadata:
       add_header X-Download-Options "noopen";
       add_header X-Frame-Options "deny";
       add_header X-Permitted-Cross-Domain-Policies "none";
-      add_header Referrer-Policy {{ include "nested-headers.csp" (.Values.ingress.referrerPolicy | default "none") | quote }};
-      add_header my-test-header {{ .Values.ingress.myTestHeader | join " " | quote }};
-      add_header Content-Security-Policy {{ include "nested-headers.csp" .Values.ingress.csp | quote }};
+      add_header Example-String {{ include "nested-headers.csp" (.Values.ingress.exampleString | default "none") | quote }};
+      add_header Example-List {{ .Values.ingress.exampleList | join " " | quote }};
       {{- range $k, $v := .Values.ingress.headers }}
-      {{- if kindIs "slice" $v }}
-      add_header {{ $k }} {{ join " " $v | quote }};
-      {{- else }}
-      add_header {{ $k }} {{ $v | quote }};
-      {{- end }}
+      add_header {{ $k }} {{ include "nested-headers.csp" $v | quote }};
       {{- end }}
 spec:
   rules:
