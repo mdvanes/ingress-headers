@@ -69,4 +69,12 @@ ingress:
         - "https://*.company.com"
       reportUri: "https://some.example.com/gateway/api-gateway/api/gateway/csp-reporting"
       reportTo: "'csp-endpoint'"
+    Feature-Policy:
+      camera: "'none'"
+      microphone: "'none'"
+      geolocation: "'none'"
+      encrypted-media: "'none'"
+      payment: "'none'"
+      speaker: "'none'"
+      usb: "'none'"
     
