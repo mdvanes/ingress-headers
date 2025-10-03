@@ -6,10 +6,66 @@ ingress:
     - bar2
     - baz3
   csp:
-    frameAncestors: "'self'"
-    defaultSrc: 
+    frameAncestors:
       - "'self'"
+    defaultSrc:
+      - "'self'"
+      - "'unsafe-inline'"
       - "*.company.com"
       - "*.service.com"
+    imgSrc:
+      - "'self'"
       - "'unsafe-inline'"
+      - "*.privacy-service.org"
+      - "*.trust-service.com"
+      - "data:"
+      - "https://*.service.com"
+      - "https://*.feedback-service.com"
+      - "https://ad.analytics-provider.net/ddm/activity/"
+      - "https://adservice.search-engine.com"
+      - "https://metrics.company.com"
+    scriptSrc:
+      - "'self'"
+      - "'unsafe-eval'"
+      - "'unsafe-inline'"
+      - "*.privacy-service.org"
+      - "*.trust-service.com"
+      - "https://*.analytics-service.net/"
+      - "https://*.company.com"
+      - "https://*.feedback-service.com"
+      - "https://assets.tag-manager.com/"
+      - "https://cdn.personalization-service.net/company.js"
+      - "https://edge.analytics-cloud.net/"
+      - "https://company.personalization-service.net/"
+      - "https://www.search-engine.com/recaptcha/"
+      - "https://www.static-content.com/recaptcha/"
+    styleSrc:
+      - "'self'"
+      - "'unsafe-inline'"
+      - "https://*.company.com"
+      - "https://*.feedback-service.com"
+    frameSrc:
+      - "'self'"
+      - "*.trust-service.com"
+      - "https://*.feedback-service.com"
+      - "https://company.analytics-service.net/"
+      - "https://www.search-engine.com/recaptcha/"
+      - "https://www.video-platform.com/"
+    connectSrc:
+      - "'self'"
+      - "*.privacy-service.org"
+      - "*.trust-service.com"
+      - "https://*.analytics-service.net/"
+      - "https://*.service.com"
+      - "https://*.feedback-service.com"
+      - "https://edge.analytics-cloud.net/"
+      - "https://company.personalization-service.net/"
+      - "https://metrics.company.com/"
+    fontSrc:
+      - "'self'"
+      - "*.feedback-service.com"
+      - "data:"
+      - "https://*.company.com"
+    reportUri: "https://some.example.com/gateway/api-gateway/api/gateway/csp-reporting"
+    reportTo: "'csp-endpoint'"
     
