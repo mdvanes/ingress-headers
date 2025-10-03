@@ -1,10 +1,22 @@
 ingress:
-  name: "vitiate"
+  nameOverride: "vitiate"
   exampleString: "foo"
   exampleList:
     - bar
     - baz
+  tlsEnabled: true
+  whitelist_select: "generic"
+  annotations:
+    - nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    - nginx.ingress.kubernetes.io/proxy-connect-timeout: "60"
+    - nginx.ingress.kubernetes.io/proxy-read-timeout: "60"
+    - nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    - nginx.ingress.kubernetes.io/use-regex: "true"
   headers:
+    X-Content-Type-Options: "nosniff"
+    X-DNS-Prefetch-Control: "off"
+    X-Download-Options: "noopen"
+    X-Frame-Options: "deny"
     Referrer-Policy: no-referrer
     Content-Security-Policy:
       frameAncestors:
