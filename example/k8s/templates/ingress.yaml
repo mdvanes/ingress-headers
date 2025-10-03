@@ -2,8 +2,12 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ .Values.ingress.name }}
-  description: {{ default (printf "%s-ingress" .Chart.Name) .Values.ingress.name | trunc 63 | trimSuffix "-" }}
-  chart: {{ default (printf "%s-ingress" .Chart.Name) .Values.ingress.chartName | trunc 63 | trimSuffix "-" }}
+  labels: 
+    description: {{ default (printf "%s-ingress" .Chart.Name) .Values.ingress.name | trunc 63 | trimSuffix "-" }}
+    chart: {{ default (printf "%s-ingress" .Chart.Name) .Values.ingress.chartName | trunc 63 | trimSuffix "-" }}
+  annotations:
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      add_header Referrer-Policy "no-referrer";
 spec:
   rules:
     - host: app.example.com

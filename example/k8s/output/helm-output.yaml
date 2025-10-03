@@ -4,8 +4,12 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: vitiate
-  description: vitiate
-  chart: ingress-headers-ingress
+  labels: 
+    description: vitiate
+    chart: ingress-headers-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      add_header Referrer-Policy "no-referrer";
 spec:
   rules:
     - host: app.example.com
